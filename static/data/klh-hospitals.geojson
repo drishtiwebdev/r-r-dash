@@ -1,0 +1,17 @@
+{
+"type": "FeatureCollection",
+"name": "klh-hospitals",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "long": 74.242294, "lat": 16.6947563, "name": "Sachin Multispeciality Hospital", "phone": "+91 73503 02525", "website": "http://www.sachinhospital.com/" }, "geometry": { "type": "Point", "coordinates": [ 74.242294, 16.6947563 ] } },
+{ "type": "Feature", "properties": { "long": 74.2380163, "lat": 16.6852076, "name": "Aster Aadhar Hospital", "phone": "+91 231 662 2555", "website": "https://www.asterhospitals.in/hospitals/aster-aadhar-kolhapur" }, "geometry": { "type": "Point", "coordinates": [ 74.2380163, 16.6852076 ] } },
+{ "type": "Feature", "properties": { "long": 74.2271494, "lat": 16.7120464, "name": "Western India Institute of Neurosciences", "phone": "+91 94219 14040", "website": "http://wiinshospitals.com/" }, "geometry": { "type": "Point", "coordinates": [ 74.2271494, 16.7120464 ] } },
+{ "type": "Feature", "properties": { "long": 74.2207341, "lat": 16.6768337, "name": "K - Star Multispeciality Hospital", "phone": "+91 90905 75353", "website": "none" }, "geometry": { "type": "Point", "coordinates": [ 74.2207341, 16.6768337 ] } },
+{ "type": "Feature", "properties": { "long": 74.2402162, "lat": 16.662563, "name": "Vital Hospital", "phone": "none", "website": "none" }, "geometry": { "type": "Point", "coordinates": [ 74.2402162, 16.662563 ] } },
+{ "type": "Feature", "properties": { "long": 74.232147, "lat": 16.676341, "name": "Isolation Hospital", "phone": "none", "website": "none" }, "geometry": { "type": "Point", "coordinates": [ 74.232147, 16.676341 ] } },
+{ "type": "Feature", "properties": { "long": 74.2313772, "lat": 16.7136101, "name": "Antrang Hospital", "phone": "+91 84128 86622", "website": "http://www.antranghospital.com/" }, "geometry": { "type": "Point", "coordinates": [ 74.2313772, 16.7136101 ] } },
+{ "type": "Feature", "properties": { "long": 74.2006614, "lat": 16.6708723, "name": "Galaxy hospital", "phone": "+91 81779 21722", "website": "none" }, "geometry": { "type": "Point", "coordinates": [ 74.2006614, 16.6708723 ] } },
+{ "type": "Feature", "properties": { "long": 74.216442, "lat": 16.679605, "name": "Krishna Hospital", "phone": "+91 231 232 6622", "website": "http://www.krishnahospitakolhapur.com/" }, "geometry": { "type": "Point", "coordinates": [ 74.216442, 16.679605 ] } },
+{ "type": "Feature", "properties": { "long": 74.2373197, "lat": 16.6884781, "name": "Shri Siddhivinayak Heart Hospital .", "phone": "+91 231 269 4890", "website": "none" }, "geometry": { "type": "Point", "coordinates": [ 74.2373197, 16.6884781 ] } }
+]
+}
