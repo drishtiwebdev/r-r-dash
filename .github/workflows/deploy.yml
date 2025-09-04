@@ -1,4 +1,5 @@
 name: Deploy SvelteKit to GitHub Pages
+
 on:
   push:
     branches: [ main ]
@@ -17,22 +18,47 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      # your PUBLIC_* vars (safe in frontend)
       PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
       PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
-      PUBLIC_MAPBOX_TOKEN: ${{ secrets.PUBLIC_MAPBOX_TOKEN }}
+      # PUBLIC_MAPBOX_TOKEN: ${{ secrets.PUBLIC_MAPBOX_TOKEN }} # if used
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run build
-      - name: Copy SPA fallback into project path
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # (Pages deep links) copy SPA fallback into both locations
+      - name: Copy SPA fallback for Project Pages
         run: |
           mkdir -p build/r-r-dash
+          # use index.html as fallback
           cp build/index.html build/404.html
           cp build/index.html build/r-r-dash/404.html
+
+      # Small diagnostic to ensure we're uploading the right path
+      - name: Show build tree
+        run: |
+          echo "::group::tree build (top)"
+          ls -la build
+          echo "::endgroup::"
+          echo "::group::find build (first 80 items)"
+          find build -maxdepth 2 -type f | sed -n '1,80p'
+          echo "::endgroup::"
+
+      # THIS must be actions/upload-pages-artifact@v3
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
 
   deploy:
     needs: build
