@@ -5,12 +5,12 @@ const dev = process.argv.includes('dev');
 export default {
   kit: {
     adapter: adapter({
-      // we’ll copy index.html to 404.html in the workflow for Pages deep links
-      fallback: 'index.html'
+      // build a SPA fallback
+      fallback: '404.html'
     }),
     paths: {
       base: dev ? '' : '/r-r-dash'
-      // ❌ do NOT set `assets` here; it must be an absolute URL if used
+      // do NOT set `assets` (it must be an absolute URL if used)
     }
   }
 };
