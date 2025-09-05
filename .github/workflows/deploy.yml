@@ -18,10 +18,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # your PUBLIC_* vars (safe in frontend)
       PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
       PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
-      PUBLIC_MAPBOX_TOKEN: ${{ secrets.PUBLIC_MAPBOX_TOKEN }} # if used
+      PUBLIC_MAPBOX_TOKEN: ${{ secrets.PUBLIC_MAPBOX_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -36,25 +35,32 @@ jobs:
       - name: Build
         run: npm run build
 
-      # (Pages deep links) copy SPA fallback into both locations
-      - name: Copy SPA fallback for Project Pages
+      # --- IMPORTANT ---
+      # Ensure GH Pages finds a SPA fallback at /r-r-dash/404.html.
+      # Some SvelteKit versions write index.html at build/r-r-dash/index.html,
+      # others at build/index.html. Handle both cases.
+      - name: Prepare SPA fallback for Project Pages
         run: |
+          set -euxo pipefail
+          ls -la build || true
+          if [ -f build/404.html ]; then
+            FALLBACK_SRC=build/404.html
+          elif [ -f build/index.html ]; then
+            FALLBACK_SRC=build/index.html
+          elif [ -f build/r-r-dash/index.html ]; then
+            FALLBACK_SRC=build/r-r-dash/index.html
+          else
+            echo "Could not find fallback source (404.html or index.html)"; find build -maxdepth 2 -type f; exit 1
+          fi
           mkdir -p build/r-r-dash
-          # use index.html as fallback
-          cp build/index.html build/404.html
-          cp build/index.html build/r-r-dash/404.html
-
-      # Small diagnostic to ensure we're uploading the right path
-      - name: Show build tree
-        run: |
-          echo "::group::tree build (top)"
+          cp "$FALLBACK_SRC" build/404.html
+          cp "$FALLBACK_SRC" build/r-r-dash/404.html
+          echo "Using fallback source: $FALLBACK_SRC"
+          echo "---- tree build (top) ----"
           ls -la build
-          echo "::endgroup::"
-          echo "::group::find build (first 80 items)"
-          find build -maxdepth 2 -type f | sed -n '1,80p'
-          echo "::endgroup::"
+          echo "---- tree build/r-r-dash ----"
+          ls -la build/r-r-dash
 
-      # THIS must be actions/upload-pages-artifact@v3
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
